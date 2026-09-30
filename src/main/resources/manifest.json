@@ -5,6 +5,12 @@
     "Description": "Adds functionality for custom chests which release their loot as dropped items instead of providing an interface.",
     "Authors": [
         {
+            "Name": "MelodicAlbuild"
+        },
+        {
+            "Name": "Riprod"
+        },
+        {
             "Name": "Lordimass",
             "Email": "lordimass@lordimass.net",
             "Url": "https://lordimass.net"
