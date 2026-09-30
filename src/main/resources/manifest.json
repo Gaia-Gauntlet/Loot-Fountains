@@ -5,7 +5,9 @@
     "Description": "Adds functionality for custom chests which release their loot as dropped items instead of providing an interface.",
     "Authors": [
         {
-            "Name": "Lordimass|lordimass@lordimass.net|https://lordimass.net"
+            "Name": "Lordimass",
+            "Email": "lordimass@lordimass.net",
+            "Url": "https://lordimass.net"
         }
     ],
     "Website": "https://gaiagauntlet.com",
@@ -14,7 +16,9 @@
         "Hytale:AssetModule": "*",
         "Hytale:EntityModule": "*"
     },
-    "OptionalDependencies": {},
+    "OptionalDependencies": {
+        
+    },
     "DisabledByDefault": false,
     "Main": "com.gaiagauntlet.LootFountainsPlugin",
     "IncludesAssetPack": true,

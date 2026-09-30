@@ -3,6 +3,7 @@ plugins {
     id 'java'
     id 'com.azuredoom.hytale-tools' version '1.+'
     id 'com.azuredoom.hytalepublisher' version '1.+'
+    id 'com.gradleup.shadow' version '9.3.1'
 }
 
 javadoc {
@@ -17,6 +18,75 @@ base {
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+}
+
+configurations {
+    shadowBundle
+    implementation.extendsFrom(shadowBundle)
+    testCompileOnly.extendsFrom(compileOnly)
+    testRuntimeOnly.extendsFrom(compileOnly)
+}
+
+def lombokVersion = "1.18.40"
+dependencies {
+    compileOnly("org.jetbrains:annotations:26.1.0")
+    compileOnly("org.jspecify:jspecify:1.0.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+
+    shadowBundle 'com.riprod:configly:1.+'
+    shadowBundle "curse.maven:patchly-1550889:8797824"
+    shadowBundle "curse.maven:creditor-1560961:8768657"
+
+    // required deps - here for convenience
+    // None!
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://www.cursemaven.com" }
+}
+
+
+test {
+    useJUnitPlatform()
+    // HytaleLogger refuses to initialize unless the Hytale log manager is installed first.
+    systemProperty 'java.util.logging.manager', 'com.hypixel.hytale.logger.backend.HytaleLogManager'
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    configurations = [project.configurations.shadowBundle]
+}
+
+// Makes sure the plugin manifest is up to date.
+tasks.named('processResources') {
+    dependsOn 'updatePluginManifest'
+}
+
+tasks.named('jar') {
+    archiveBaseName.set(project.mod_name)
+    archiveVersion.set(project.version)
+    archiveClassifier.set('plain')
+}
+
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+tasks.named('shadowJar') {
+    archiveClassifier.set('')
+    configurations = [project.configurations.shadowBundle]
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }
 
 hytaleTools {
@@ -37,15 +107,4 @@ hytaleTools {
     injectServerJavadocsIntoSources = project.inject_server_javadocs_into_sources.toString().toBoolean()
     generateAssetsBinary = project.generateAssetsBinary.toString().toBoolean()
     patchline = project.patchline.toString()
-}
-
-repositories {
-    mavenCentral()
-}
-
-idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
 }
