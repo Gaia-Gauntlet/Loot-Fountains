@@ -1,0 +1,51 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id 'com.azuredoom.hytale-tools' version '1.+'
+    id 'com.azuredoom.hytalepublisher' version '1.+'
+}
+
+javadoc {
+    options.addStringOption('Xdoclint:-missing', '-quiet')
+}
+
+group = project.group
+
+base {
+  archivesName = project.mod_name.toString()
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+}
+
+hytaleTools {
+    javaVersion = project.java_version as Integer
+    hytaleVersion = project.hytale_version.toString()
+    manifestServerVersion = project.manifestServerVersion.toString()
+    manifestGroup = project.manifest_group.toString()
+    modId = project.mod_id.toString()
+    modDescription = project.mod_description.toString()
+    modUrl = project.mod_url.toString()
+    mainClass = project.main_class.toString()
+    modCredits = project.mod_author.toString()
+    manifestDependencies = project.manifest_dependencies.toString()
+    manifestOptionalDependencies = project.manifest_opt_dependencies.toString()
+    curseforgeId = project.curseforgeID.toString()
+    disabledByDefault = project.disabled_by_default.toString().toBoolean()
+    includesPack = project.includes_pack.toString().toBoolean()
+    injectServerJavadocsIntoSources = project.inject_server_javadocs_into_sources.toString().toBoolean()
+    generateAssetsBinary = project.generateAssetsBinary.toString().toBoolean()
+    patchline = project.patchline.toString()
+}
+
+repositories {
+    mavenCentral()
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
