@@ -37,8 +37,6 @@ dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
-    shadowBundle 'com.riprod:configly:1.+'
-    shadowBundle "curse.maven:patchly-1550889:8797824"
     shadowBundle "curse.maven:creditor-1560961:8768657"
 
     // required deps - here for convenience
