@@ -1,6 +1,9 @@
 package com.gaiagauntlet;
 
+import com.creditor.Creditor;
+import com.gaiagauntlet.interactions.LootFountainInteraction;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 
@@ -22,6 +25,10 @@ public class LootFountainsPlugin extends JavaPlugin {
     @Override
     protected void setup() {
         LOGGER.at(Level.INFO).log("Setting up Loot Fountains!");
+        Creditor.setup(this);
+
+        getCodecRegistry(Interaction.CODEC).register(LootFountainInteraction.ID,
+            LootFountainInteraction.class, LootFountainInteraction.CODEC);
     }
 
     @Override

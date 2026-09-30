@@ -1,0 +1,36 @@
+{
+  "Container": {
+    "Type": "Choice",
+    "RollsMin": 4,
+    "RollsMax": 6,
+    "Containers": [
+      {
+        "Type": "Single",
+        "Weight": 55,
+        "Item": {
+          "ItemId": "Ingredient_Bar_Copper",
+          "QuantityMin": 1,
+          "QuantityMax": 3
+        }
+      },
+      {
+        "Type": "Single",
+        "Weight": 30,
+        "Item": {
+          "ItemId": "Rock_Gem_Emerald",
+          "QuantityMin": 1,
+          "QuantityMax": 2
+        }
+      },
+      {
+        "Type": "Single",
+        "Weight": 15,
+        "Item": {
+          "ItemId": "Rock_Gem_Ruby",
+          "QuantityMin": 1,
+          "QuantityMax": 1
+        }
+      }
+    ]
+  }
+}

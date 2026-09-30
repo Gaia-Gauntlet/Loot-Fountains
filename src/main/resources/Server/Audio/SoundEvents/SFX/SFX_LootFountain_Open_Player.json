@@ -1,0 +1,13 @@
+{
+  "Layers": [
+    {
+      "Files": [ "Sounds/Items/Chest/Chest_Wooden_Open_01.ogg" ]
+    },
+    {
+      "Files": [ "Sounds/Deployables/Totem_Heal/Deployable_Totem_Heal_Spawn_01.ogg", "Sounds/Deployables/Totem_Heal/Deployable_Totem_Heal_Spawn_02.ogg", "Sounds/Deployables/Totem_Heal/Deployable_Totem_Heal_Spawn_03.ogg", "Sounds/Deployables/Totem_Heal/Deployable_Totem_Heal_Spawn_04.ogg" ],
+      "StartDelay": 0.4
+    }
+  ],
+  "Volume": 2,
+  "Parent": "SFX_Attn_Quiet"
+}

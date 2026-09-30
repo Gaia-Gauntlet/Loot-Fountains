@@ -1,0 +1,15 @@
+{
+  "Type": "LootFountain",
+  "Droplist": "LootFountain_Demo",
+  "OpenState": "Opened",
+  "SpawnOffset": [0.0, 1.25, 0.0],
+  "SpawnRadius": 0.2,
+  "BurstDelaySeconds": 0.5,
+  "ArcDegrees": 360.0,
+  "HorizontalSpeedMin": 1.8,
+  "HorizontalSpeedMax": 3.2,
+  "VerticalSpeedMin": 7.0,
+  "VerticalSpeedMax": 9.0,
+  "PickupDelaySeconds": 0.75,
+  "MaxItemEntities": 64
+}

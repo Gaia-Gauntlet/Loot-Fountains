@@ -1,0 +1,37 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Memory_ImplosionStart",
+      "RotationOffset": {
+        "Roll": -90
+      }
+    },
+    {
+      "SpawnerId": "Memory_Spiral2",
+      "PositionOffset": {
+        "Z": 0
+      },
+      "StartDelay": 1.1,
+      "RotationOffset": {
+        "Roll": 0
+      }
+    },
+    {
+      "SpawnerId": "Memory_Sparks_Linger",
+      "StartDelay": 1.1,
+      "RotationOffset": {
+        "Roll": 0
+      }
+    },
+    {
+      "SpawnerId": "Memory_Glow",
+      "RotationOffset": {
+        "Roll": 0
+      }
+    },
+    {
+      "SpawnerId": "LootFountain_Circle"
+    }
+  ],
+  "IsImportant": false
+}
