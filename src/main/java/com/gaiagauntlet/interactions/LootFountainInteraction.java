@@ -7,12 +7,11 @@ import com.hypixel.hytale.codec.validation.Validators;
 import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentAccessor;
-import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.SoundCategory;
-import com.hypixel.hytale.protocol.VariantRotation;
 import com.hypixel.hytale.server.core.HytaleServer;
+import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.RotationTuple;
 import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
@@ -24,7 +23,7 @@ import com.hypixel.hytale.server.core.modules.item.ItemModule;
 import com.hypixel.hytale.server.core.universe.world.SoundUtil;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.chunk.BlockOperations;
-import com.hypixel.hytale.server.core.universe.world.chunk.BlockRotationUtil;
+import com.hypixel.hytale.server.core.universe.world.chunk.section.BlockSection;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -89,20 +88,25 @@ public final class LootFountainInteraction extends SimpleBlockInteraction {
     @Override
     protected void interactWithBlock(@Nonnull World world, @Nonnull CommandBuffer<EntityStore> commandBuffer, @Nonnull InteractionType type,
             @Nonnull InteractionContext context, @Nullable ItemStack itemInHand, @Nonnull Vector3i pos, @Nonnull CooldownHandler cooldownHandler) {
-        var blockType = world.getBlockType(pos);
-        if (blockType == null || blockType.isState()) return;
+        var chunkStore = world.getChunkStore();
+        var sectionRef = chunkStore.getChunkSectionReferenceAtBlock(pos.x, pos.y, pos.z);
+        if (sectionRef == null || !sectionRef.isValid()) return; // Returns if section is not loaded.
+
+        var blockSection = chunkStore.getStore().getComponent(sectionRef, BlockSection.getComponentType());
+        if (blockSection == null) return;
+
+        int rotationIndex = blockSection.getRotationIndex(pos.x, pos.y, pos.z);
+        RotationTuple rotation = RotationTuple.get(rotationIndex);
+
+        int blockId = blockSection.get(pos.x, pos.y, pos.z);
+        BlockType blockType = BlockType.getAssetMap().getAsset(blockId);
+        if (blockType == null) return;
 
         var opened = blockType.getBlockForState(openState);
         if (opened == null) return;
 
-        var chunk = world.getChunkIfLoaded(ChunkUtil.indexChunkFromBlock(pos.x, pos.z));
-        if (chunk == null) return;
-
-        var rotation = RotationTuple.get(chunk.getRotationIndex(pos.x, pos.y, pos.z));
-        var chunkStore = world.getChunkStore();
-        var sectionRef = chunkStore.getChunkSectionReference(ChunkUtil.chunkCoordinate(pos.x), ChunkUtil.chunkCoordinate(pos.y),
-                ChunkUtil.chunkCoordinate(pos.z));
-        if (sectionRef == null) return;
+        var chunkRef = world.getChunkStore().getChunkSectionReferenceAtBlock(pos.x, pos.y, pos.z);
+        if (chunkRef == null) return;
 
         BlockOperations.setBlockInteractionState(chunkStore, sectionRef, pos.x, pos.y, pos.z, blockType, openState, false);
         var mouth = new Vector3f((float) spawnOffset[0], (float) spawnOffset[1], (float) spawnOffset[2]);
