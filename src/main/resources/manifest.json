@@ -1,7 +1,7 @@
 {
     "Group": "com.gaiagauntlet",
     "Name": "Loot Fountains",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "Description": "Adds functionality for custom chests which release their loot as dropped items instead of providing an interface.",
     "Authors": [
         {
